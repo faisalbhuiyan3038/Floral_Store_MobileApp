@@ -58,6 +58,8 @@ public class SignInActivity extends AppCompatActivity {
                         Toast.makeText(SignInActivity.this, "Incorrect Credentials! Please Try Again..", Toast.LENGTH_SHORT).show();
                         inputEmail.setText("");
                         inputPassword.setText("");
+
+
                     }
                     else {
                         Intent intent = new Intent(SignInActivity.this, ProductListingActivity.class);
