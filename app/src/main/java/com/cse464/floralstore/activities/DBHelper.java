@@ -28,11 +28,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 + "password" + " TEXT)";
 
         myDB.execSQL(query);
+
+        myDB.execSQL("CREATE TABLE orders (id INT PRIMARY KEY AUTOINCREMENT, name TEXT, phone TEXT, price INT, image INT, description TEXT, flower_name TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int oldVersion, int newVersion) {
         myDB.execSQL("DROP TABLE IF EXISTS " + db_name);
+        myDB.execSQL("DROP TABLE IF EXISTS orders");
+        onCreate(myDB);
 
     }
 
@@ -47,6 +51,26 @@ public class DBHelper extends SQLiteOpenHelper {
 
         if(result == -1) return false;
         else return true;
+
+    }
+
+    public Boolean insertOrder(String name, String phone, int price, int image, String desc, String flower_name){
+        SQLiteDatabase database = getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name",name);
+        values.put("phone",phone);
+        values.put("price",price);
+        values.put("image",image);
+        values.put("description",desc);
+        values.put("flower_name",flower_name);
+        long id = database.insert("orders",null,values);
+
+        if (id<=0){
+            return false;
+        }
+        else {
+            return true;
+        }
 
     }
 
