@@ -5,10 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.cse464.floralstore.Models.OrdersModel;
+
+import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -80,9 +85,11 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase myDB = this.getWritableDatabase();
         Cursor verificationCursor = myDB.rawQuery("SELECT * FROM users WHERE email = ?",new String[] {email});
         if(verificationCursor.getCount()>0){
+            verificationCursor.close();
             return true;
         }
         else {
+            verificationCursor.close();
             return false;
         }
 
@@ -92,11 +99,36 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase myDB = this.getWritableDatabase();
         Cursor verificationCursor = myDB.rawQuery("SELECT * FROM users WHERE email = ? and password = ?",new String[] {email,password});
         if(verificationCursor.getCount()>0) {
+            verificationCursor.close();
             return true;
         }
         else {
+            verificationCursor.close();
             return false;
         }
+    }
 
+    public ArrayList<OrdersModel> getOrders(){
+        ArrayList<OrdersModel> orders = new ArrayList<>();
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        Cursor cursor = myDB.rawQuery("SELECT id,flowername,image,price FROM orders",null);
+        if(cursor.moveToFirst()){
+            while(cursor.moveToNext()){
+                OrdersModel model = new OrdersModel();
+                model.setOrderNumber(cursor.getInt(0)+"");
+                model.setSoldItemName(cursor.getString(1));
+                model.setOrderImage(cursor.getInt(2));
+                model.setPrice(cursor.getInt(3)+"");
+                orders.add(model);
+            }
+        }
+        cursor.close();
+        myDB.close();
+        return orders;
+    }
+
+    public int deleteOrder(String id){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        return myDB.delete("orders","id="+id,null);
     }
 }

@@ -21,12 +21,8 @@ public class OrderActivity extends AppCompatActivity {
         binding= ActivityOrderBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ArrayList<OrdersModel>list = new ArrayList<>();
-        list.add(new OrdersModel(R.drawable.pinks,"Essence" , "500", "1830995"));
-        list.add(new OrdersModel(R.drawable.purple,"Purple Vibrant" , "650", "1921298"));
-        list.add(new OrdersModel(R.drawable.pinks,"Essence" , "500", "1830995"));
-        list.add(new OrdersModel(R.drawable.pinks,"Essence" , "500", "1830995"));
-        list.add(new OrdersModel(R.drawable.pinks,"Essence" , "500", "1830995"));
+        DBHelper helper  = new DBHelper(this);
+        ArrayList<OrdersModel>list = helper.getOrders();
 
         OrdersAdapter adapter = new OrdersAdapter(list , this);
         binding.orderRecyclerView.setAdapter(adapter);

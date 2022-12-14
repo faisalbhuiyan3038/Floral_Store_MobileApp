@@ -28,6 +28,26 @@ public class DetailActivity extends AppCompatActivity {
         binding.nameTitle.setText(name);
         binding.detailDescription.setText(description);
 
+        binding.add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer $qty = Integer.parseInt(binding.qtytextview.getText().toString());
+                $qty = $qty + 1;
+                binding.qtytextview.setText($qty.toString());
+            }
+        });
+
+        binding.subtract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer $qty = Integer.parseInt(binding.qtytextview.getText().toString());
+                if($qty!=0){
+                    $qty = $qty - 1;
+                    binding.qtytextview.setText($qty.toString());
+                }
+            }
+        });
+
         DBHelper helper = new DBHelper(this);
 
         binding.insertBtn.setOnClickListener(new View.OnClickListener(){
