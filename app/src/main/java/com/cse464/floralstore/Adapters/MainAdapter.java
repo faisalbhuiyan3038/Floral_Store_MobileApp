@@ -1,6 +1,7 @@
 package com.cse464.floralstore.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cse464.floralstore.Models.MainModel;
 import com.cse464.floralstore.R;
+import com.cse464.floralstore.activities.DetailActivity;
 
 
 import java.util.ArrayList;
@@ -41,6 +43,20 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.viewholder>{
         holder.mainName.setText(model.getName());
         holder.price.setText(model.getPrice());
         holder.description.setText(model.getDescription());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("image", model.getImage());
+                intent.putExtra("price", model.getPrice());
+                intent.putExtra("desc", model.getDescription());
+                intent.putExtra("name", model.getName());
+                context.startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
