@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -14,6 +15,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String db_name = "FloralStore.db";
 
     private static final String userTable = "users";
+    private static final String orderTable = "orders";
 
 
 
@@ -29,14 +31,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
         myDB.execSQL(query);
 
-        myDB.execSQL("CREATE TABLE orders (id INT PRIMARY KEY AUTOINCREMENT, name TEXT, phone TEXT, price INT, image INT, description TEXT, flower_name TEXT)");
+        myDB.execSQL("CREATE TABLE orders (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, phone TEXT, price INT, image INT, quantity INT, description TEXT, flowername TEXT)");
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase myDB, int oldVersion, int newVersion) {
+    public void onUpgrade(@NonNull SQLiteDatabase myDB, int oldVersion, int newVersion) {
         myDB.execSQL("DROP TABLE IF EXISTS " + db_name);
-        myDB.execSQL("DROP TABLE IF EXISTS orders");
-        onCreate(myDB);
+
 
     }
 
@@ -54,18 +55,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public Boolean insertOrder(String name, String phone, int price, int image, String desc, String flower_name){
-        SQLiteDatabase database = getReadableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("name",name);
-        values.put("phone",phone);
-        values.put("price",price);
-        values.put("image",image);
-        values.put("description",desc);
-        values.put("flower_name",flower_name);
-        long id = database.insert("orders",null,values);
+    public Boolean insertOrder(String name, String phone, int price, int image, int quantity, String desc, String flowername){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues Values = new ContentValues();
+        Values.put("name",name);
+        Values.put("phone",phone);
+        Values.put("price",price);
+        Values.put("image",image);
+        Values.put("quantity",quantity);
+        Values.put("description",desc);
+        Values.put("flowername",flowername);
+        long result = myDB.insert("orders",null,Values);
 
-        if (id<=0){
+        if (result==-1){
             return false;
         }
         else {

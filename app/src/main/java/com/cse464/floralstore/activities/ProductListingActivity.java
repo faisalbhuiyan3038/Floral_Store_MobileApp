@@ -3,7 +3,10 @@ package com.cse464.floralstore.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.cse464.floralstore.Adapters.MainAdapter;
 import com.cse464.floralstore.Models.MainModel;
@@ -21,6 +24,14 @@ public class ProductListingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityFlowerProductListingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.myOrderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductListingActivity.this, OrderActivity.class);
+                startActivity(intent);
+            }
+        });
 
         ArrayList<MainModel> list = new ArrayList<>();
 

@@ -8,6 +8,17 @@
     android:orientation="vertical">
 
 
+    <Button
+        android:id="@+id/myOrderBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF5722"
+        android:backgroundTintMode="add"
+        android:text="My Orders"
+        android:visibility="visible"
+        app:cornerRadius="7dp"
+        app:strokeColor="#FF9800"
+        app:strokeWidth="2dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
