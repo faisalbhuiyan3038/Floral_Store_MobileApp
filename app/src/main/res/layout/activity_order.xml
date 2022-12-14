@@ -11,4 +11,9 @@
     tools:context=".activities.OrderActivity">
 
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/orderRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/individual_order_row" />
 </LinearLayout>
